@@ -437,6 +437,16 @@ If you accidentally expose a private key or API credential, revoke or rotate it 
 
 ---
 
+## 🌐 Polylayer
+
+Explore **Polylayer**, a platform for discovering and exploring the Polymarket ecosystem.
+
+**Website:** https://polylayer.fun/
+
+> A simple hub for exploring Polymarket-related tools, projects, and resources.
+
+---
+
 # ⚠️ Risk Disclaimer
 
 This software is a trading bot and is provided for automated trading purposes.
