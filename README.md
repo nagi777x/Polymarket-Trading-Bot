@@ -1,6 +1,6 @@
-# Polymarket Trading Bot — Automated Prediction Market Trading  
+# Polymarket Momentum Arbitrage Bot ⚡
 
-> **Polymarket Trading Bot** for automated prediction-market trading across Windows, macOS, and Linux. The bot is designed around real-time market monitoring, **Momentum Spike Arbitrage**, probability estimation, and automated execution. Trial builds are available for local testing, while production plans include dedicated infrastructure, optimized trading parameters, strategy configuration, and technical support.
+> A real-time automated trading bot for Polymarket that detects momentum spikes, estimates market probability dislocations, and executes trades when expected value exceeds execution costs and risk thresholds.
 
 ---
 
